@@ -1,13 +1,13 @@
 
 def test_add_new_book_add_four_books(collection_box):
-    assert len(collection_box.get_books_rating()) == 4
+    assert list(collection_box.get_books_rating().keys()) == ['Полная Ж - Радислав Гандапас', 'Мотивация к Работе - Ф.ХерцБерг', 'Генрих Альштуллер «Найди идею. Введение в ТРИЗ', 'Таунсенд «Сломай систему! Лекарство от управленческой изжоги»']
     # Проверка что добавилось 4 новые книги
 
 
 def test_add_new_book_cannot_add_same_book(collection_box):
     books = list(collection_box.get_books_rating().keys())  # получаем название всех книг
     collection_box.add_new_book(books[0])  # пытаемся добавить первую книгу из списка кторая уже есть
-    assert len(collection_box.get_books_rating()) == 4  # проверяем что число книг не изменилось
+    assert list(collection_box.get_books_rating().keys()) == ['Полная Ж - Радислав Гандапас', 'Мотивация к Работе - Ф.ХерцБерг', 'Генрих Альштуллер «Найди идею. Введение в ТРИЗ', 'Таунсенд «Сломай систему! Лекарство от управленческой изжоги»']
     # Проверка что книгу кторую мы получили первой из спика еще раз добавить не удалось
 
 def test_set_book_rating_impossible_set_rating_for_non_exist_book(collection_box):
@@ -35,8 +35,8 @@ def test_get_books_rating_no_rating_for_a_non_existent_book(collection_box):
 
 def test_add_book_in_favorites_add_new_book(collection_box):
     books = list(collection_box.get_books_rating().keys())   # получаем список книг
-    collection_box.add_book_in_favorites(books[3])           # добовляем четвертую  книги из списка книг в сипосок фаворитов
-    assert books[3] in collection_box.get_list_of_favorites_books() #проверяем что именно четвертая книга из писка довавилась в список фаваритов
+    collection_box.add_book_in_favorites(books[3])          # добовляем четвертую  книги из списка книг в сипосок фаворитов
+    assert collection_box.get_list_of_favorites_books() == [books[3]]  #проверяем что именно четвертая книга из писка довавилась в список фаваритов
     # Провека добовления новой книги в список фаворитов
 
 def test_add_book_in_favorites_cant_add_same_book_in_favorit(collection_box):
@@ -44,7 +44,7 @@ def test_add_book_in_favorites_cant_add_same_book_in_favorit(collection_box):
     collection_box.add_book_in_favorites(books[2])          # добовляем третью книгу в сисок фаваритов
     len_of_favorint = len(collection_box.get_list_of_favorites_books())  # вносим в переменную длинну  списка фаворитов, после добовляения новой книги
     collection_box.add_book_in_favorites(books[2])         # повторно добовляем туже книгу в список фаворитов
-    assert len(collection_box.get_list_of_favorites_books()) == len_of_favorint  # проверяем что длина списка не увеличилась а соталось прежней книга недобавлена
+    assert collection_box.get_list_of_favorites_books() == [books[2]]  # проверяем что длина списка не увеличилась а соталось прежней книга недобавлена
     # Проверка что нельзя добавить одну и туже книгу в список фаворитов
 
 def test_add_book_in_favorites_cant_add_in_favorites_if_book_not_in_books_rating(collection_box):
@@ -56,11 +56,10 @@ def test_add_book_in_favorites_cant_add_in_favorites_if_book_not_in_books_rating
 
 def test_delete_book_from_favorites_delete_book(collection_box):
     books = list(collection_box.get_books_rating().keys())  # получаем список книг из books_rating
-    collection_box.add_book_in_favorites(books[1])  # добовляем вторую книгу из списка books_rating в список book_in_favorites
-    collection_box.add_book_in_favorites(books[3])  # добовляем еще одну книгу из списка books_rating в список book_in_favorites
-    len_favorits_books = len(collection_box.get_list_of_favorites_books()) # получаем длинну списка фаворитов на данный момент там 2 книги
-    collection_box.delete_book_from_favorites(books[1])     # удаляем вторую книгу из списка фаворитов
-    assert len(collection_box.get_list_of_favorites_books()) == len_favorits_books - 1 # проверяем что одна книгуа удалена из фаворитов
+    collection_box.add_book_in_favorites(books[1])  # добовляем вторую книгу из списка books_rating в список book_in_favorites - 'Мотивация к Работе - Ф.ХерцБерг'
+    collection_box.add_book_in_favorites(books[3])  # добовляем еще одну книгу из списка books_rating в список book_in_favorites - Таунсенд «Сломай систему! Лекарство от управленческой изжоги»
+    collection_box.delete_book_from_favorites(books[1])     # удаляем одну книгу из списка фаворитов - 'Мотивация к Работе - Ф.ХерцБерг'
+    assert collection_box.get_list_of_favorites_books() == ['Таунсенд «Сломай систему! Лекарство от управленческой изжоги»'] # проверяем что всписке осталась одна книга
     # Проверка удаления книги из списка фаворитов
 
 def test_set_book_rating_add_specific_rating(collection_box):
@@ -70,7 +69,7 @@ def test_set_book_rating_add_specific_rating(collection_box):
 
 def test_get_books_with_specific_rating(collection_box):
     collection_box.set_book_rating('Мотивация к Работе - Ф.ХерцБерг', 8)  # добовляем имеющейся книге новый рэйтинг
-    assert 'Мотивация к Работе - Ф.ХерцБерг' in collection_box.get_books_with_specific_rating(8) # провряем что книга в списке
+    assert collection_box.get_books_with_specific_rating(8) == ['Мотивация к Работе - Ф.ХерцБерг']  # провряем что книга в списке
     # Проверка вывода списка с определенным рэйтиногом
 
 
