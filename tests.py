@@ -1,18 +1,3 @@
-from main import BooksCollector
-import pytest
-
-
-# создаем фикстуру кторая будет нам добавлять 4 книги
-@pytest.fixture(scope='function')
-def collection_box():
-    collector = BooksCollector()
-    collector.add_new_book('Полная Ж - Радислав Гандапас')
-    collector.add_new_book('Мотивация к Работе - Ф.ХерцБерг')
-    collector.add_new_book('Генрих Альштуллер «Найди идею. Введение в ТРИЗ')
-    collector.add_new_book('Таунсенд «Сломай систему! Лекарство от управленческой изжоги»')
-
-    return collector
-
 
 def test_add_new_book_add_four_books(collection_box):
     assert len(collection_box.get_books_rating()) == 4
