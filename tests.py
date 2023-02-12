@@ -42,7 +42,6 @@ def test_add_book_in_favorites_add_new_book(collection_box):
 def test_add_book_in_favorites_cant_add_same_book_in_favorit(collection_box):
     books = list(collection_box.get_books_rating().keys())  # получаем список книг
     collection_box.add_book_in_favorites(books[2])          # добовляем третью книгу в сисок фаваритов
-    len_of_favorint = len(collection_box.get_list_of_favorites_books())  # вносим в переменную длинну  списка фаворитов, после добовляения новой книги
     collection_box.add_book_in_favorites(books[2])         # повторно добовляем туже книгу в список фаворитов
     assert collection_box.get_list_of_favorites_books() == [books[2]]  # проверяем что длина списка не увеличилась а соталось прежней книга недобавлена
     # Проверка что нельзя добавить одну и туже книгу в список фаворитов
