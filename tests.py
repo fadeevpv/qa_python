@@ -59,7 +59,7 @@ def test_delete_book_from_favorites_delete_book(collection_box):
     collection_box.add_book_in_favorites(books[1])  # добовляем вторую книгу из списка books_rating в список book_in_favorites - 'Мотивация к Работе - Ф.ХерцБерг'
     collection_box.add_book_in_favorites(books[3])  # добовляем еще одну книгу из списка books_rating в список book_in_favorites - Таунсенд «Сломай систему! Лекарство от управленческой изжоги»
     collection_box.delete_book_from_favorites(books[1])     # удаляем одну книгу из списка фаворитов - 'Мотивация к Работе - Ф.ХерцБерг'
-    assert collection_box.get_list_of_favorites_books() == ['Таунсенд «Сломай систему! Лекарство от управленческой изжоги»'] # проверяем что всписке осталась одна книга
+    assert collection_box.get_list_of_favorites_books() == [books[3]] # проверяем что всписке осталась одна книга
     # Проверка удаления книги из списка фаворитов
 
 def test_set_book_rating_add_specific_rating(collection_box):
